@@ -22,7 +22,7 @@ const Cadastrados = [
 const promo = produtos.map((elemento)=>{
     return {
         nome: elemento.nome,
-        preço:parseInt(elemento.preco*0.5)
+        preço:parseFloat(elemento.preco*0.5)
     }
 })
 //promoçao de carnes
@@ -32,6 +32,7 @@ const promo_carne= carnes.map((elemento)=>{
             preço: elemento.preco *0.5,
             peso: elemento.kg
         }
+        
 })
 //funçao de cadastro
 function cadastro(nome, idade, cpf){
@@ -42,7 +43,16 @@ function cadastro(nome, idade, cpf){
         console.log('CPF inválido. Por favor, digite um CPF com pelo menos 11 caracteres.')
     }
 }
-
+function menor_1kg(peso){
+    return carnes.map((elemento)=>{
+        const precoFinal = (elemento.preco / elemento.kg)*peso
+        return{
+            nome: elemento.nome,
+            preco: precoFinal,
+            peso: peso
+        }
+    })
+}
 //interface
 function inter(){
     console.log("======================= Mercantil System =======================")
@@ -74,12 +84,18 @@ function principal(escolha){
         const option = readline.question('QUAL PROMO DESEJA APLICAR: ')
         if(option == 'Carnes'){
             console.clear()
-            console.log(carnes)
-            console.log(promo_carne)
+            const kilo = readline.questionFloat('Qual a quantidade de Kg?: ')
+            if (kilo == 1){
+                console.log(carnes)
+                console.log(promo_carne)
+            }else if(kilo < 1){
+               console.log(menor_1kg(kilo))
+            }
         }
         if(option == 'produtos'){
             console.clear()
-        console.log('a promoçao ficou de: '+promo)
+            console.log('a promoçao ficou de: ')
+            console.log(promo)
         }   
     }else if(escolha == '5'){
         console.clear()
