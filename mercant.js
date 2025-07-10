@@ -34,12 +34,15 @@ const promo_carne= carnes.map((elemento)=>{
         }
 })
 //funçao de cadastro
-function cadastro(nome, cpf, idade){
-    if(cpf.lenght == 12)
-        Cadastrados.push({nome: nome, idade: idade, cpf: cpf})
-    else
-        console.log('CPF invalido, porfavor Digite um cpf com 9+ caracteres')
+function cadastro(nome, idade, cpf){
+    if(cpf.length >= 11){ 
+        Cadastrados.push({ nome: nome, idade: idade, cpf: cpf })
+        console.log("Cliente cadastrado com sucesso!")
+    } else {
+        console.log('CPF inválido. Por favor, digite um CPF com pelo menos 11 caracteres.')
+    }
 }
+
 //interface
 function inter(){
     console.log("======================= Mercantil System =======================")
@@ -51,24 +54,22 @@ function inter(){
     console.log("[5] FINALIZAR SISTEMA")
     console.log("================================================================")
 }
-inter()
 //escolha da operaçao
-const escolha = readline.question('')
-//
-switch(escolha){
-    case '1':
+function principal(escolha){
+    
+    if(escolha == '1'){
         console.clear()
         const nome = readline.question('INFORME O NOME DO CLIENTE: ')
         const idade = readline.questionInt('QUAL A IDADE DO CLIENTE: ')
         const cpf = readline.question('INDIQUE O CPF DO CLIENTE: ')
         cadastro(nome, idade,cpf)
-    case '2':
+    }else if(escolha == '2'){
         console.clear()
         console.log(produtos)
-    case '3':
+    }else if(escolha == '3'){
         console.clear()
         console.log(Cadastrados)
-    case '4':
+    }else if(escolha == '4'){
         console.clear()
         const option = readline.question('QUAL PROMO DESEJA APLICAR: ')
         if(option == 'Carnes'){
@@ -78,10 +79,17 @@ switch(escolha){
         }
         if(option == 'produtos'){
             console.clear()
-            console.log('a promoçao ficou de: '+promo)
-        }
-    case '5':
+        console.log('a promoçao ficou de: '+promo)
+        }   
+    }else if(escolha == '5'){
         console.clear()
         console.log('SISTEMA ENCERRADO')
-        break
+    }
 }
+let per
+do{
+    inter()
+    const escolha = readline.question('')
+    principal(escolha)
+    per = readline.question('Deseja continuar?(S/n)')
+}while(per == 's')
